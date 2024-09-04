@@ -25,13 +25,14 @@
                     {{-- <button data-filter="" class="active">All</button> --}}
 
                     @foreach ($getUniqueProductBrands as $brand)
-                    {{-- <button data-filter=".{{$brand}}">{{$brand}}</button> --}}
                     <a class=" btn  {{ (strtolower(str_replace(['/', ' '],'-',$brand)) == $brand_name) ? 'btn-primary' : '' }}" href="{{route('brand_products',['slug'=>$slug,'brand_name'=>strtolower(str_replace(' ','-',$brand))])}}" class="btn btn-default">{{$brand}}</a>
                     @endforeach
                 </div>
                 <div class="isotope-filters text-left">
                     @foreach ($getUniqueProductBNumbers as $number)
-                        <button data-filter=".{{ strtolower(str_replace(['/', ' '],'-',$number)) }}">{{$number}}</button>
+                        @if($number != '')
+                            <button data-filter=".{{ strtolower(str_replace(['/', ' '],'-',$number)) }}">{{$number}}</button>
+                        @endif
                     @endforeach
                 </div>
                 <div class="isotope columns-4 popup-gallery">

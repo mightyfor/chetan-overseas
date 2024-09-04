@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\sendContactEmail;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,6 +25,14 @@ Route::get('/about-chetan-overseas', [FrontendController::class,'about_us'])->na
 Route::get('/contact-chetan-overseas', [FrontendController::class,'contact_us'])->name('contact_us');
 Route::get('/{slug}', [FrontendController::class,'product'])->name('product');
 Route::get('/brand/{slug}/{brand_name}', [FrontendController::class,'brandProduct'])->name('brand_products');
+Route::get('/run',function(){
+    Artisan::call('storage:link');
+});
+Route::post('/sendemail',function(Request $request){
+    $request_data = $request->all();
+    $send = Mail::to('gohelmohit82@gmail.com')->send(new sendContactEmail($request_data));
+    return redirect()->back()->with('success', 'Your message has been sent successfully! ');
+})->name('sendemail');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

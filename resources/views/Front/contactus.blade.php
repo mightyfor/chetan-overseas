@@ -77,25 +77,32 @@ page-title-->
        </div>
     <div class="row">
       <div class="col-sm-12">
-           <div id="formmessage">Success/Error Message Goes Here</div>
-             <form id="contactform" role="form" method="post" action="php/contact-form.php">
+           {{-- <div id="formmessage">Success/Error Message Goes Here</div> --}}
+             <form role="form" method="post" action="{{route('sendemail')}}">
+                @csrf
               <div class="contact-form clearfix">
                  <div class="section-field">
-                   <input id="name" type="text" placeholder="Name*" class="form-control"  name="name">
+                   <input id="name" type="text" placeholder="Name*" class="form-control"  name="name" required>
                </div>
                  <div class="section-field">
-                   <input type="email" placeholder="Email*" class="form-control" name="email">
+                   <input type="email" placeholder="Email*" class="form-control" name="email" required>
                 </div>
                   <div class="section-field">
-                    <input type="text" placeholder="Phone*" class="form-control" name="phone">
+                    <input type="text" placeholder="Phone*" class="form-control" name="phone" required>
                 </div>
                    <div class="section-field textarea">
-                     <textarea class="form-control input-message" placeholder="Comment*" rows="7" name="message"></textarea>
+                     <textarea class="form-control input-message" placeholder="Comment*" rows="7" name="message" required></textarea>
                    </div>
-                <div class="g-recaptcha section-field clearfix" data-sitekey="[Add your site key]"></div>
                  <div class="section-field submit-button">
-                  <input type="hidden" name="action" value="sendEmail"/>
-                 <button id="submit" name="submit" type="submit" value="Send" class="button"> Send your message </button>
+                  @if(session('success'))
+                    <div class="col-sm-12">
+                        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    </div>
+                  @else
+                    <button id="submit" name="submit" type="submit" value="Send" class="button"> Send your message </button>
+                  @endif
                  </div>
                 </div>
             </form>
